@@ -1,0 +1,31 @@
+================================================================================
+RESUMO DE KPIs - E-COMMERCE BRASILEIRO
+================================================================================
+
+1. KPIs FINANCEIROS
+--------------------------------------------------------------------------------
+Receita Total: R$ 3,915,541.70
+Ticket Médio: R$ 948.76
+Frete Médio: R$ 33.76
+Desconto Médio: 2.47%
+Take-rate de Frete: 3.56%
+
+2. KPIs OPERACIONAIS
+--------------------------------------------------------------------------------
+Total de Pedidos: 4,636
+Taxa de Confirmação: 89.02%
+Taxa de Cancelamento: 10.98%
+
+3. KPIs LOGÍSTICOS
+--------------------------------------------------------------------------------
+Prazo Médio de Entrega: 8.8 dias
+Atraso Médio: 1.2 dias
+Taxa de Atraso: 47.20%
+
+4. TOP INSIGHTS
+--------------------------------------------------------------------------------
+✓ Categoria mais lucrativa: Eletrônicos
+✓ Melhor método de pagamento: Cartão de Crédito
+✓ Região com maior receita: Sudeste
+✗ Região com maior custo de frete: Norte
+✗ Maior taxa de atraso: Nordeste
