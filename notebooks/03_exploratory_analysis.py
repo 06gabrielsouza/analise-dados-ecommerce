@@ -1,15 +1,3 @@
-"""
-Notebook 3: Análise Exploratória de Dados (EDA)
-E-commerce Analytics Project
-
-Este notebook realiza:
-1. Análise descritiva com medidas de tendência central e dispersão
-2. Análise univariada com histogramas e boxplots
-3. Análise bivariada e correlações
-4. Análise temporal e sazonalidade
-5. Análise por categorias e segmentos
-"""
-
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt

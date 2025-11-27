@@ -1,15 +1,3 @@
-"""
-Notebook 4: EDA - Análise Temporal e Categórica
-E-commerce Analytics Project
-
-Este notebook realiza:
-1. Análise temporal (sazonalidade mensal)
-2. Análise por região/UF
-3. Análise por categoria de produto
-4. Análise por método de pagamento
-5. Análise por tipo de serviço de entrega
-"""
-
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt

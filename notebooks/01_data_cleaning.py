@@ -1,16 +1,3 @@
-"""
-Notebook 1: Limpeza e Preparação dos Dados
-E-commerce Analytics Project
-
-Este notebook realiza:
-1. Carregamento e inspeção inicial dos dados
-2. Tratamento de tipos de dados
-3. Tratamento de valores faltantes
-4. Remoção de duplicatas
-5. Detecção e tratamento de outliers
-6. Feature Engineering
-"""
-
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt

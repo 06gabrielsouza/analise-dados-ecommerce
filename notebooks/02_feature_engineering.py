@@ -1,14 +1,3 @@
-"""
-Notebook 2: Detecção de Outliers e Feature Engineering
-E-commerce Analytics Project
-
-Este notebook realiza:
-1. Detecção e tratamento de outliers
-2. Feature Engineering (criação de novas variáveis)
-3. Validação de integridade dos dados
-4. Exportação dos dados limpos
-"""
-
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
