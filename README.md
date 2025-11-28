@@ -23,7 +23,7 @@ O projeto foi desenvolvido para atender integralmente a todos os requisitos soli
 | **Qualidade de Dados** | Diagramas, Chaves, Integridade, Deduplicação | **OK** | Verificação de unicidade (`Order_ID`), tratamento de NA, remoção de duplicatas e validação de cálculos no `01_data_cleaning.py`. |
 | **Análise Descritiva** | Medidas de Tendência/Dispersão, EDA com gráficos | **OK** | Estatísticas descritivas e 13 visualizações (histogramas, boxplots, heatmaps) nos notebooks `03_` e `04_`. |
 | **Inferência** | ICs para médias/proporções, verificação de suposições | **OK** | IC 95% para Ticket Médio, Taxa de Atraso e Confirmação. Testes de normalidade e hipóteses no `05_statistical_inference.py`. |
-| **Reprodutibilidade** | Notebook Python + SQL | **OK** | 6 notebooks Python sequenciais e script `run_all.sh` para automação. |
+| **Reprodutibilidade** | Notebook Python + SQL | **OK** | 6 notebooks Python sequenciais, script `run_all.sh` para automação e arquivo `schema.sql` para estrutura de dados. |
 | **KPIs** | Receita, Ticket Médio, Frete, Atraso, Conversão, Mix, Sazonalidade | **OK** | Todos os KPIs calculados e analisados no `06_kpis_insights.py`. |
 
 ## 🛠️ Estrutura do Projeto e Pipeline de Análise
@@ -35,6 +35,7 @@ O projeto segue uma estrutura modular e um pipeline de análise bem definido, ga
 ```
 /ecommerce-analytics
 ├── data/                 # Dados brutos, intermediários e limpos (ecommerce_clean.csv)
+│   └── schema.sql        # Arquivo SQL com o esquema das tabelas (para requisito de reprodutibilidade)
 ├── figures/              # Gráficos e visualizações gerados (.png)
 ├── notebooks/            # Código-fonte da análise (6 notebooks Python)
 ├── reports/              # Relatório Analítico (.md, .pdf) e resumos de inferência
