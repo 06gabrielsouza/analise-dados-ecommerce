@@ -7,7 +7,7 @@ import warnings
 warnings.filterwarnings('ignore')
 
 print("="*80)
-print("NOTEBOOK 5: CORRIGIDO")
+print("NOTEBOOK 5: INFERÊNCIA ESTATÍSTICA")
 print("="*80)
 
 df = pd.read_csv('../data/ecommerce_clean.csv')
@@ -27,7 +27,7 @@ ic = stats.t.interval(0.95, len(df)-1, loc=media, scale=erro)
 print(f"\nTicket Médio: R$ {media:.2f}")
 print(f"IC 95%: {ic}")
 
-# 3. ANOVA (CORREÇÃO AQUI: Verifica se há categorias suficientes)
+# 3. ANOVA (Verifica se há categorias suficientes)
 print("\n--- ANOVA: Ticket Médio por Categoria ---")
 categorias = df['Category'].unique()
 
@@ -35,9 +35,18 @@ if len(categorias) < 2:
     print(f"⚠️ AVISO: Apenas 1 categoria encontrada ({categorias[0]}).")
     print("Não é possível realizar ANOVA (comparação entre grupos) com apenas um grupo.")
 else:
-    grupos = [df[df['Category'] == cat]['Total'] for cat in categorias]
+    grupos = [df[df['Category'] == cat]['Total'].dropna() for cat in categorias]
     f_val, p_val = stats.f_oneway(*grupos)
-    print(f"P-valor: {p_val:.5f}")
+    print(f"P-valor da ANOVA: {p_val:.5f}")
+
+    # Teste de Levene para Homogeneidade de Variâncias (Homocedasticidade)
+    from scipy.stats import levene
+    stat_levene, p_levene = levene(*grupos)
+    print(f"P-valor do Teste de Levene: {p_levene:.5f}")
+    if p_levene < 0.05:
+        print("Conclusão Levene: Rejeita H0. Variâncias não são homogêneas (Heterocedasticidade).")
+    else:
+        print("Conclusão Levene: Não rejeita H0. Variâncias são homogêneas (Homocedasticidade).")
 
 # Salvar gráfico simples de IC
 plt.figure(figsize=(6, 4))
