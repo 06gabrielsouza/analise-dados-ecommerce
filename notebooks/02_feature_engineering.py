@@ -91,7 +91,7 @@ outlier_df = pd.DataFrame(outlier_summary)
 print("\n--- Resumo de Outliers ---")
 print(outlier_df)
 
-# Tratamento: remover outliers extremos (Z-score > 3)
+# Tratamento: remover outliers extremos (Z-score > 3) para garantir a robustez da análise estatística subsequente
 print("\n--- Tratamento de Outliers ---")
 initial_count = len(df)
 
