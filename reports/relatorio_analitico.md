@@ -52,7 +52,11 @@ O dataset bruto passou por um rigoroso processo de limpeza e preparação para g
 1.  **Tratamento de Tipos:** As colunas de data foram convertidas para o formato `datetime`, e as colunas numéricas foram ajustadas para `float` ou `int`.
 2.  **Valores Faltantes:** Valores ausentes em `Discount` foram preenchidos com 0 (assumindo ausência de desconto). Em `P_Service` (frete), foram imputados com a mediana do respectivo tipo de serviço. Datas de entrega (`D_Date`) ausentes em pedidos confirmados foram preenchidas com a data prevista para permitir a análise de atraso.
 3.  **Remoção de Duplicatas:** Foram identificados e removidos 50 registros duplicados baseados no `Order_ID`, mantendo-se a primeira ocorrência.
-4.  **Tratamento de Outliers:** Outliers em variáveis financeiras (`Total`, `Subtotal`, `P_Service`) foram identificados usando o método Z-score (threshold > 3). Um total de 364 registros com valores extremos foram removidos para não distorcer as análises de tendência central e inferência.
+4.  **Tratamento de Outliers e Robustez Estatística:** Outliers em variáveis financeiras (`Total`, `Subtotal`, `P_Service`) foram identificados e tratados para evitar a distorção das análises de tendência central e, principalmente, dos testes de inferência subsequentes.
+
+    Utilizamos o método **Z-score** com um limiar de **3 desvios-padrão** para identificar valores extremos. Este método é adequado para dados que, embora não sejam estritamente normais, possuem uma distribuição unimodal e simétrica o suficiente para que valores muito distantes da média sejam considerados anômalos.
+
+    A remoção de **364 registros** (aproximadamente 7.3% do *dataset* inicial) foi uma decisão metodológica para garantir a **robustez** dos Intervalos de Confiança (ICs) e dos testes de hipóteses (ANOVA), que são sensíveis a valores extremos. Os *outliers* removidos representam transações atípicas que, se mantidas, poderiam inflacionar artificialmente a média e o desvio-padrão, comprometendo a generalização dos resultados para a população de pedidos.
 
 Após a limpeza, o dataset final ficou com **4.636 registros**.
 
@@ -97,12 +101,12 @@ A matriz de correlação mostra, como esperado, uma correlação quase perfeita 
 
 **Receita por Categoria:** A categoria de **Eletrônicos** é a principal fonte de receita, seguida por **Casa e Decoração**. Livros, apesar de terem um alto volume de pedidos, contribuem com a menor parcela da receita devido ao baixo ticket médio.
 
-![Análise por Categoria](../figures/07_analise_categoria.png)
+![Análise por Categoria](https://private-us-east-1.manuscdn.com/sessionFile/QZFEkxQOHKeamYWLo4fQ3z/sandbox/H57AvMkVReQI51ldYykAE6-images_1764336169594_na1fn_L2hvbWUvdWJ1bnR1L2FuYWxpc2UtZGFkb3MtZWNvbW1lcmNlL2ZpZ3VyZXMvMDdfYW5hbGlzZV9jYXRlZ29yaWE.png?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvUVpGRWt4UU9IS2VhbVlXTG80ZlEzei9zYW5kYm94L0g1N0F2TWtWUmVRSTUxbGRZeWtBRTYtaW1hZ2VzXzE3NjQzMzYxNjk1OTRfbmExZm5fTDJodmJXVXZkV0oxYm5SMUwyRnVZV3hwYzJVdFpHRmtiM010WldOdmJXMWxjbU5sTDJacFozVnlaWE12TURkZllXNWhiR2x6WlY5allYUmxaMjl5YVdFLnBuZyIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5ODc2MTYwMH19fV19&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=XP5UTRPsbBRV2GLs7~plty~R1DZHhxfI2ZvqG6xYNueTDwK40r4hR4vanBDk0fIDHAYUrJ-vvh1~kpffifCMyafTPiWvf2-YSrnSaABpL7h-IyksVp9Q6QPM7-GwROp9rV-GmeKtVAPG~gWMeKnh45o70FkczAuxxFpEynVT8mtI~vVU70CdeTTvM2TMyvh6lensiL4OpIa08UkyR9Xfvq-KTCmZoX8or3CQkLMJrSqK2v0vE-oGdUi9FyDivoS4O3epYnV19lTHhBlTf0C5Py6uVO462cY2YGeb5OjyxPmnFj6NFYbLsSQcE-ieWzkoY6ZaGegVzb6OCdl6VxUv9Q__)
 *Figura 3: Análise de Receita, Ticket Médio e Desconto por Categoria.*
 
 **Performance Logística:** O serviço **Standard** é o mais utilizado (70% dos pedidos confirmados), com o frete mais baixo, porém o maior prazo de entrega. O serviço **Same-Day**, embora mais caro, cumpre a promessa de entrega rápida. A taxa de atraso, no entanto, é similar entre os três serviços, pairando em torno de 47%.
 
-![Análise de Serviços de Entrega](../figures/09_analise_servico.png)
+![Análise de Serviços de Entrega](https://private-us-east-1.manuscdn.com/sessionFile/QZFEkxQOHKeamYWLo4fQ3z/sandbox/H57AvMkVReQI51ldYykAE6-images_1764336169595_na1fn_L2hvbWUvdWJ1bnR1L2FuYWxpc2UtZGFkb3MtZWNvbW1lcmNlL2ZpZ3VyZXMvMDlfYW5hbGlzZV9zZXJ2aWNv.png?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvUVpGRWt4UU9IS2VhbVlXTG80ZlEzei9zYW5kYm94L0g1N0F2TWtWUmVRSTUxbGRZeWtBRTYtaW1hZ2VzXzE3NjQzMzYxNjk1OTVfbmExZm5fTDJodmJXVXZkV0oxYm5SMUwyRnVZV3hwYzJVdFpHRmtiM010WldOdmJXMWxjbU5sTDJacFozVnlaWE12TURsZllXNWhiR2x6WlY5elpYSjJhV052LnBuZyIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5ODc2MTYwMH19fV19&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=epiX2YuE0M5z5FSJCo3-AxSWoWQwaPZN6KSFvsaqKoETQqeX8fR0WiHspBqwif4zZA28xMPDUd3qcht2TWra8Zmx1bokrz2CxLkyxtPgErs868a4SCpaGZe84QhDRHR~2UhLEvdAn~ZUOYeb1WGt0sxOYLgseTmzAb8L5uDnoeSbziNUR5lL~4V6WzdXnXW2CWUSiyPrhw~rL-O9gN4DdY~PrhcutXfuxBMEDnb5d9QxnP9b6WYRqks~s9tgJlrdJF5CCS7mOyR-vfoG0F3sNLsdzByUZj-5beD3liOryhyc6KdbIvWNA2v2iclMZtm0ZoZi~G7eiZAe4wcfcMik0w__)
 *Figura 4: Comparativo de Frete, Prazo e Atraso por tipo de serviço.*
 
 ---
@@ -113,7 +117,16 @@ Para validar os achados e fazer generalizações para a população de clientes,
 
 ### 4.1. Verificação de Suposições
 
-Os testes de normalidade (Shapiro-Wilk, D'Agostino-Pearson) rejeitaram a hipótese de normalidade para todas as variáveis financeiras e de tempo (p < 0.05). No entanto, devido ao grande tamanho da amostra (n > 30), o Teorema do Limite Central nos permite prosseguir com os testes paramétricos, como o Teste t, com robustez.
+Para a realização dos testes paramétricos, como o Intervalo de Confiança (IC) baseado na distribuição *t* e a Análise de Variância (ANOVA), a suposição de normalidade dos dados é ideal.
+
+Os testes de normalidade (Shapiro-Wilk, D'Agostino-Pearson) rejeitaram a hipótese nula de normalidade para as variáveis financeiras e de tempo (p < 0.05). No entanto, devido ao **grande tamanho da amostra** (*n* = 4.636), o **Teorema do Limite Central** garante que a **distribuição amostral das médias** tende à normalidade, permitindo a aplicação robusta dos testes paramétricos.
+
+Além da normalidade, a ANOVA exige a suposição de **homogeneidade das variâncias** (homocedasticidade) entre os grupos. O **Teste de Levene** foi aplicado para verificar se a variância do *Ticket Total* é similar entre as diferentes categorias de produtos.
+
+*   **Resultado do Teste de Levene:** [P-valor: 0.00000]
+*   **Conclusão:** Rejeita H0. Variâncias não são homogêneas (Heterocedasticidade).
+
+A documentação completa dos testes de suposição está disponível no notebook `05_statistical_inference.py`.
 
 ### 4.2. Intervalos de Confiança (IC 95%)
 
@@ -123,7 +136,7 @@ Os ICs fornecem uma faixa de valores prováveis para as médias e proporções d
 *   **IC para Taxa de Atraso:** A verdadeira taxa de atraso da operação logística está entre **45.68% e 48.73%**.
 *   **IC para Taxa de Confirmação:** A proporção de pedidos que são efetivamente pagos e confirmados está entre **88.09% e 89.89%**.
 
-![Intervalos de Confiança para Médias](../figures/11_ic_medias.png)
+![Intervalos de Confiança para Médias](https://private-us-east-1.manuscdn.com/sessionFile/QZFEkxQOHKeamYWLo4fQ3z/sandbox/H57AvMkVReQI51ldYykAE6-images_1764336169595_na1fn_L2hvbWUvdWJ1bnR1L2FuYWxpc2UtZGFkb3MtZWNvbW1lcmNlL2ZpZ3VyZXMvMTFfaWNfbWVkaWFz.png?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvUVpGRWt4UU9IS2VhbVlXTG80ZlEzei9zYW5kYm94L0g1N0F2TWtWUmVRSTUxbGRZeWtBRTYtaW1hZ2VzXzE3NjQzMzYxNjk1OTVfbmExZm5fTDJodmJXVXZkV0oxYm5SMUwyRnVZV3hwYzJVdFpHRmtiM010WldOdmJXMWxjbU5sTDJacFozVnlaWE12TVRGZmFXTmZiV1ZrYVdGei5wbmciLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3OTg3NjE2MDB9fX1dfQ__&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=TscEF4f3G0YOFG1qbySThYiCoccvZit-jBOddlv1EL-LHNQ6GbbPlJ7jUqCVbkWAA16slns9ldpipyMMofXRp26bIl7umwyMl34gZbfeRhGTpVsHA3ZMjKGH~1bzEYM3fadt7wxU-YQnjwAckIoWPY4ozSaIvCz8Beo86I8ImXuo8p2gXKMXZhQwVlJUNCNEeB1avcwawIXUWNhRbB2Tm4uquut6D33JaLDsegrLG5Yx4YUJuenUHCOrTe~Y6BWWHlzyzLVORyfkBy9lSTr8T9iUrUIGz6TcSnOK6LztSojP8FRIiZOf6jWFZs9EitCLDsqpHHIHZ5auGtol~RfljQ__)
 *Figura 5: Intervalos de confiança de 95% para as principais métricas de média.*
 
 ### 4.3. Testes de Hipóteses
@@ -138,7 +151,7 @@ Os ICs fornecem uma faixa de valores prováveis para as médias e proporções d
 
 O dashboard abaixo consolida os principais KPIs (Key Performance Indicators) e direciona para os insights mais relevantes.
 
-![Dashboard de KPIs](../figures/13_dashboard_kpis.png)
+![Dashboard de KPIs](https://private-us-east-1.manuscdn.com/sessionFile/QZFEkxQOHKeamYWLo4fQ3z/sandbox/H57AvMkVReQI51ldYykAE6-images_1764336169649_na1fn_L2hvbWUvdWJ1bnR1L2FuYWxpc2UtZGFkb3MtZWNvbW1lcmNlL2ZpZ3VyZXMvMTNfZGFzaGJvYXJkX2twaXM.png?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvUVpGRWt4UU9IS2VhbVlXTG80ZlEzei9zYW5kYm94L0g1N0F2TWtWUmVRSTUxbGRZeWtBRTYtaW1hZ2VzXzE3NjQzMzYxNjk2NDlfbmExZm5fTDJodmJXVXZkV0oxYm5SMUwyRnVZV3hwYzJVdFpHRmtiM010WldOdmJXMWxjbU5sTDJacFozVnlaWE12TVROZlpHRnphR0p2WVhKa1gydHdhWE0ucG5nIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk4NzYxNjAwfX19XX0_&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=DDhtvuaLqTAFgOMBhSLAzu~AFQrdL~P7hAf6FnTqAgOC69TgVCuzRXqqSKJUmdzSNXyb8KFntiv67O-mor07B~a27xBzhdElTgxSKUWZAo-XRaF19rkU4ulftb9dXkKiE6KYj0j0hNhp5nDvMbKpsk4UJ1RO5MM0CargLX58mn06oZ4uJOTkyZ9IV5j9v6cmd2GDgJxq5HcUVXfzX2FOTxDWp3ddkPPaHrDchYhQNCB2xMsOFEmjfJwolUH1mLmcA5j2yCfWUpyGHwobaiiIYkTAGmPK5lR19uXTjxIhOteg2ZY2cZ5KDTLUNhV-cVvxykVHqhkT2NcJZNghd4JINg__)
 *Figura 6: Dashboard consolidado com os principais KPIs do negócio.*
 
 ### Principais KPIs
