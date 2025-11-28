@@ -49,7 +49,7 @@ O projeto segue uma estrutura modular e um pipeline de análise bem definido, ga
 | Notebook | Responsável | Fase da Análise | Descrição Detalhada |
 | :--- | :--- | :--- | :--- |
 | `01_data_cleaning.py` | Gabriel | Data Cleaning | Carregamento, tratamento de tipos, NA (imputação por mediana/zero), e remoção de duplicatas por `Order_ID`. |
-| `02_feature_engineering.py` | Gabriel | Feature Engineering | Criação de 13 novas variáveis (ex: `delivery_delay_days`, `freight_share`, `is_late`) e tratamento de outliers extremos (Z-score > 3). |
+| `02_feature_engineering.py` | Gabriel | Feature Engineering | Criação de 13 novas variáveis (ex: `delivery_delay_days`, `freight_share`, `is_late`) e tratamento de outliers extremos (Z-score > 3) para garantir a robustez dos testes estatísticos subsequentes. |
 | `03_exploratory_analysis.py` | Gabriel | EDA (Descritiva) | Análise univariada (distribuições, boxplots) e bivariada (matriz de correlação, scatter plots) das variáveis financeiras e de tempo. |
 | `04_eda_temporal_categorical.py` | Gabriel | EDA (Segmentação) | Análise de sazonalidade (mensal), performance regional (UF/Região), mix de produtos (Categoria) e comportamento de pagamento. |
 | `05_statistical_inference.py` | Leandro | Inferência Estatística | Testes de normalidade, cálculo de Intervalos de Confiança (ICs 95% para médias e proporções) e Testes de Hipóteses (t-Student, Qui-Quadrado, ANOVA). |
