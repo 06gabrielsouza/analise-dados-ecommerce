@@ -7,7 +7,7 @@ warnings.filterwarnings('ignore')
 plt.rcParams['figure.figsize'] = (14, 6)
 
 print("="*80)
-print("NOTEBOOK 6: CORRIGIDO (DASHBOARD DINÂMICO)")
+print("NOTEBOOK 6: KPIS E INSIGHTS DE NEGÓCIO")
 print("="*80)
 
 df = pd.read_csv('../data/ecommerce_clean.csv')
