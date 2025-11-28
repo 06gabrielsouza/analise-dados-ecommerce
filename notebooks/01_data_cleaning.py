@@ -9,7 +9,7 @@ print("NOTEBOOK 1: INTEGRACAO E LIMPEZA (DADOS REAIS) - VERSÃO CORRIGIDA")
 print("="*80)
 
 # Caminho dos arquivos
-DATA_DIR = '../data'
+DATA_DIR = os.path.join(os.path.dirname(__file__), '..', 'data')
 
 # 1. CARREGAR AS 5 TABELAS
 print("\n1. Carregando tabelas...")
