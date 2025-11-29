@@ -101,6 +101,6 @@ source venv/bin/activate
 
 ---
 
-**Desenvolvido por**: Manus AI  
+**Desenvolvido por**: Gabriel Sozua, Leandro Moraes
 **Data**: 08 de Novembro de 2025  
 **Versão**: 1.0
