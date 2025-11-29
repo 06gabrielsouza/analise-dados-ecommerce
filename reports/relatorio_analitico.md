@@ -1,8 +1,6 @@
 # Relatório de Análise de Dados – E-commerce Brasileiro
 
-**Autores:** Gabriel dos Santos Souza e Leandro de Morais
-**Turma:** 3º Período - ADS Embarque Digital
-**Data:** 08 de Novembro de 2025
+**Autores:** Gabriel dos Santos Souza e Leandro de Morais **Turma:** 3º Período - ADS Embarque Digital **Data:** 28 de Novembro de 2025
 
 ---
 
@@ -13,22 +11,19 @@
 Para a execução deste projeto, as responsabilidades foram divididas da seguinte forma:
 
 | Membro da Equipe | Responsabilidades Principais | Notebooks/Fases |
-| :--- | :--- | :--- |
+| --- | --- | --- |
 | **Gabriel dos Santos Souza** | Limpeza de Dados, Feature Engineering, Análise Exploratória (EDA) | `01_data_cleaning.py`, `02_feature_engineering.py`, `03_exploratory_analysis.py`, `04_eda_temporal_categorical.py` |
 | **Leandro de Morais** | Inferência Estatística, Cálculo de KPIs, Geração de Insights, Relatório Analítico | `05_statistical_inference.py`, `06_kpis_insights.py`, Relatório Analítico, README |
 
-
-| **Leandro de Morais** | Inferência Estatística, Cálculo de KPIs, Geração de Insights, Relatório Analítico |
-
 Este relatório apresenta uma análise aprofundada dos dados de vendas de um e-commerce brasileiro, cobrindo o período de janeiro a outubro de 2024. A análise resultou em insights acionáveis para a direção, com foco em otimização de receita, performance logística e comportamento do cliente. Os principais achados são:
 
-1.  **Otimização de Pagamentos é Crucial para a Receita:** A taxa de cancelamento de pedidos realizados com **Boleto (18.6%)** e **Cartão de Débito (18.7%)** é significativamente mais alta que a de **Cartão de Crédito (8.4%)** e **PIX (8.8%)**. Uma campanha para incentivar o uso de PIX e crédito, ou um sistema de lembretes para pagamento de boletos, poderia recuperar uma parcela significativa da receita perdida.
+1. **Otimização de Pagamentos é Crucial para a Receita:** A taxa de cancelamento de pedidos realizados com **Boleto (18.6%)** e **Cartão de Débito (18.7%)** é significativamente mais alta que a de **Cartão de Crédito (8.4%)** e **PIX (8.8%)**. Uma campanha para incentivar o uso de PIX e crédito, ou um sistema de lembretes para pagamento de boletos, poderia recuperar uma parcela significativa da receita perdida.
 
-2.  **Eletrônicos Dominam a Receita, mas com Margens Apertadas:** A categoria de **Eletrônicos** representa **53% da receita total**, impulsionada por um ticket médio altíssimo (R$ 2.762). No entanto, a categoria também possui a maior média de desconto (5.1%), sugerindo uma sensibilidade ao preço. Estratégias de cross-selling com produtos de margem maior, como acessórios, podem aumentar a lucratividade.
+1. **Eletrônicos Dominam a Receita, mas com Margens Apertadas:** A categoria de **Eletrônicos** representa **53% da receita total**, impulsionada por um ticket médio altíssimo (R$ 2.762). No entanto, a categoria também possui a maior média de desconto (5.1%), sugerindo uma sensibilidade ao preço. Estratégias de cross-selling com produtos de margem maior, como acessórios, podem aumentar a lucratividade.
 
-3.  **Performance Logística Regional Apresenta Desafios:** A região **Nordeste** registra a **maior taxa de atraso (49.4%)** e o segundo maior custo de frete médio (R$ 36.43), atrás apenas da região Norte. Isso indica gargalos logísticos que podem estar impactando a satisfação do cliente e a recompra. Uma revisão dos parceiros logísticos ou a implementação de um centro de distribuição local são ações recomendadas.
+1. **Performance Logística Regional Apresenta Desafios:** A região **Nordeste** registra a **maior taxa de atraso (49.4%)** e o segundo maior custo de frete médio (R$ 36.43), atrás apenas da região Norte. Isso indica gargalos logísticos que podem estar impactando a satisfação do cliente e a recompra. Uma revisão dos parceiros logísticos ou a implementação de um centro de distribuição local são ações recomendadas.
 
-4.  **Sazonalidade de Vendas é Moderada, mas Relevante:** As vendas apresentam um pico em **Março**, tanto em volume de pedidos quanto em receita. Compreender os fatores por trás dessa alta (ex: datas comemorativas, comportamento do consumidor pós-férias) pode permitir a replicação de estratégias bem-sucedidas em outros meses do ano.
+1. **Sazonalidade de Vendas é Moderada, mas Relevante:** As vendas apresentam um pico em **Março**, tanto em volume de pedidos quanto em receita. Compreender os fatores por trás dessa alta (ex: datas comemorativas, comportamento do consumidor pós-férias) pode permitir a replicação de estratégias bem-sucedidas em outros meses do ano.
 
 ---
 
@@ -36,27 +31,39 @@ Este relatório apresenta uma análise aprofundada dos dados de vendas de um e-c
 
 ### 2.1. Fonte e Estrutura dos Dados
 
+O modelo de dados utilizado é um esquema estrela (star schema), composto por uma tabela de fatos (FACT_Orders) e quatro tabelas de dimensão (DIM_Customer, DIM_Products, DIM_Delivery, DIM_Shopping). Este modelo facilita a agregação de métricas e a análise por diferentes perspectivas de negócio.
+
+![Diagrama de Relacionamento de Entidades (ERD)](https://private-us-east-1.manuscdn.com/sessionFile/zGysUTGtnwlqd0rFCCylvo/sandbox/LeQ8PCtZXuExsEbOffbqGb-images_1764384305521_na1fn_L2hvbWUvdWJ1bnR1L2FuYWxpc2UtZGFkb3MtZWNvbW1lcmNlL2ZpZ3VyZXMvMDFfZXJkX3NjaGVtYQ.png?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvekd5c1VUR3Rud2xxZDByRkNDeWx2by9zYW5kYm94L0xlUThQQ3RaWHVFeHNFYk9mZmJxR2ItaW1hZ2VzXzE3NjQzODQzMDU1MjFfbmExZm5fTDJodmJXVXZkV0oxYm5SMUwyRnVZV3hwYzJVdFpHRmtiM010WldOdmJXMWxjbU5sTDJacFozVnlaWE12TURGZlpYSmtYM05qYUdWdFlRLnBuZyIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5ODc2MTYwMH19fV19&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=Bv4It8DuMNbkt0uillXlvTpvJtkUbGaC~U4HZDrc0LdwbaTsbWk4o7HHr3D6NpMchNzijQjvXijVqngUCHXuQ~Jfrx~L7ejre2VGLftP~oMAJxThPOcBVeP8mPQjkPitYAiNH50gFYp9~RjcP1rrODLIvqXTR-0l~iOECW~eZ2dDOu9Y471xhT-uFnYA7aNsjsV4HbIR8mVAXZJZ9oru2OVycD85gplI7RfsaqkPnKtweclIvmPjOpP-n3xeoZ~bQ9gAt9-ACCjhqxfDaBxZQzoLLCc0-X0da1uuKA4AecBObIHdWG1umOx1Q2xcz~DngOwDPav94jOycwpeG9eRiQ__) *Figura 1: Diagrama de Relacionamento de Entidades (ERD) do Modelo de Dados.*
+
 Para esta análise, foi utilizado um conjunto de dados sintético, gerado para simular as operações de um e-commerce brasileiro com 5.000 pedidos iniciais. O dataset contém informações detalhadas sobre pedidos, clientes, produtos, pagamentos e entregas. As principais colunas incluem:
 
-*   **Identificadores:** `Order_ID`
-*   **Datas:** `Order_Date`, `D_Forecast` (previsão), `D_Date` (real)
-*   **Geografia:** `UF`, `Region`
-*   **Produto:** `Category`, `Subcategory`
-*   **Valores:** `Subtotal`, `Discount`, `P_Service` (frete), `Total`
-*   **Status:** `Payment_Method`, `Purchase_Status`, `Services`
+- **Identificadores:** `Order_ID`
+
+- **Datas:** `Order_Date`, `D_Forecast` (previsão), `D_Date` (real)
+
+- **Geografia:** `UF`, `Region`
+
+- **Produto:** `Category`, `Subcategory`
+
+- **Valores:** `Subtotal`, `Discount`, `P_Service` (frete), `Total`
+
+- **Status:** `Payment_Method`, `Purchase_Status`, `Services`
 
 ### 2.2. Preparação e Limpeza dos Dados
 
 O dataset bruto passou por um rigoroso processo de limpeza e preparação para garantir a qualidade e a confiabilidade da análise. As seguintes etapas foram executadas:
 
-1.  **Tratamento de Tipos:** As colunas de data foram convertidas para o formato `datetime`, e as colunas numéricas foram ajustadas para `float` ou `int`.
-2.  **Valores Faltantes:** Valores ausentes em `Discount` foram preenchidos com 0 (assumindo ausência de desconto). Em `P_Service` (frete), foram imputados com a mediana do respectivo tipo de serviço. Datas de entrega (`D_Date`) ausentes em pedidos confirmados foram preenchidas com a data prevista para permitir a análise de atraso.
-3.  **Remoção de Duplicatas:** Foram identificados e removidos 50 registros duplicados baseados no `Order_ID`, mantendo-se a primeira ocorrência.
-4.  **Tratamento de Outliers e Robustez Estatística:** Outliers em variáveis financeiras (`Total`, `Subtotal`, `P_Service`) foram identificados e tratados para evitar a distorção das análises de tendência central e, principalmente, dos testes de inferência subsequentes.
+1. **Tratamento de Tipos:** As colunas de data foram convertidas para o formato `datetime`, e as colunas numéricas foram ajustadas para `float` ou `int`.
 
-    Utilizamos o método **Z-score** com um limiar de **3 desvios-padrão** para identificar valores extremos. Este método é adequado para dados que, embora não sejam estritamente normais, possuem uma distribuição unimodal e simétrica o suficiente para que valores muito distantes da média sejam considerados anômalos.
+1. **Valores Faltantes:** Valores ausentes em `Discount` foram preenchidos com 0 (assumindo ausência de desconto). Em `P_Service` (frete), foram imputados com a mediana do respectivo tipo de serviço. Datas de entrega (`D_Date`) ausentes em pedidos confirmados foram preenchidas com a data prevista para permitir a análise de atraso.
 
-    A remoção de **364 registros** (aproximadamente 7.3% do *dataset* inicial) foi uma decisão metodológica para garantir a **robustez** dos Intervalos de Confiança (ICs) e dos testes de hipóteses (ANOVA), que são sensíveis a valores extremos. Os *outliers* removidos representam transações atípicas que, se mantidas, poderiam inflacionar artificialmente a média e o desvio-padrão, comprometendo a generalização dos resultados para a população de pedidos.
+1. **Remoção de Duplicatas:** Foram identificados e removidos 50 registros duplicados baseados no `Order_ID`, mantendo-se a primeira ocorrência.
+
+1. **Tratamento de Outliers e Robustez Estatística:** Outliers em variáveis financeiras (`Total`, `Subtotal`, `P_Service`) foram identificados e tratados para evitar a distorção das análises de tendência central e, principalmente, dos testes de inferência subsequentes.
+
+   Utilizamos o método **Z-score** com um limiar de **3 desvios-padrão** para identificar valores extremos. Este método é adequado para dados que, embora não sejam estritamente normais, possuem uma distribuição unimodal e simétrica o suficiente para que valores muito distantes da média sejam considerados anômalos.
+
+   A remoção de **364 registros** (aproximadamente 7.3% do *dataset* inicial) foi uma decisão metodológica para garantir a **robustez** dos Intervalos de Confiança (ICs) e dos testes de hipóteses (ANOVA), que são sensíveis a valores extremos. Os *outliers* removidos representam transações atípicas que, se mantidas, poderiam inflacionar artificialmente a média e o desvio-padrão, comprometendo a generalização dos resultados para a população de pedidos.
 
 Após a limpeza, o dataset final ficou com **4.636 registros**.
 
@@ -64,12 +71,17 @@ Após a limpeza, o dataset final ficou com **4.636 registros**.
 
 Novas variáveis foram criadas para aprofundar a análise e permitir o cálculo de KPIs complexos:
 
-*   `delivery_lead_time`: Tempo total entre a data do pedido e a data da entrega.
-*   `delivery_delay_days`: Diferença em dias entre a entrega real e a prevista.
-*   `is_late`: Flag binário (1/0) que indica se um pedido atrasou.
-*   `is_confirmed`: Flag binário (1/0) que indica se o pagamento foi confirmado.
-*   `freight_share`: Proporção do valor do frete em relação ao total do pedido.
-*   `discount_abs`: Valor absoluto do desconto em Reais.
+- `delivery_lead_time`: Tempo total entre a data do pedido e a data da entrega.
+
+- `delivery_delay_days`: Diferença em dias entre a entrega real e a prevista.
+
+- `is_late`: Flag binário (1/0) que indica se um pedido atrasou.
+
+- `is_confirmed`: Flag binário (1/0) que indica se o pagamento foi confirmado.
+
+- `freight_share`: Proporção do valor do frete em relação ao total do pedido.
+
+- `discount_abs`: Valor absoluto do desconto em Reais.
 
 ---
 
@@ -79,35 +91,31 @@ Novas variáveis foram criadas para aprofundar a análise e permitir o cálculo 
 
 A análise das principais variáveis numéricas revela uma forte assimetria à direita, comum em dados financeiros. A média do **Ticket Total** é de **R$ 952,86**, enquanto a mediana é de R$ 497,78, indicando que um menor número de pedidos de alto valor eleva a média geral.
 
-| Métrica               | Ticket Total | Prazo de Entrega (dias) | Atraso (dias) | Desconto (%) |
-| --------------------- | ------------ | ----------------------- | ------------- | ------------ |
-| **Média**             | R$ 952,86    | 10.1                    | 2.9           | 4.0%         |
-| **Mediana**           | R$ 497,78    | 9.0                     | 1.0           | 0.0%         |
-| **Desvio Padrão**     | R$ 1.229,15  | 6.9                     | 4.9           | 5.5%         |
-| **Mínimo**            | R$ 21,54     | 0                       | -7.0          | 0.0%         |
-| **Máximo**            | R$ 7.844,19  | 33                      | 21            | 20.0%        |
+| Métrica | Ticket Total | Prazo de Entrega (dias) | Atraso (dias) | Desconto (%) |
+| --- | --- | --- | --- | --- |
+| **Média** | R$ 952,86 | 10.1 | 2.9 | 4.0% |
+| **Mediana** | R$ 497,78 | 9.0 | 1.0 | 0.0% |
+| **Desvio Padrão** | R$ 1.229,15 | 6.9 | 4.9 | 5.5% |
+| **Mínimo** | R$ 21,54 | 0 | -7.0 | 0.0% |
+| **Máximo** | R$ 7.844,19 | 33 | 21 | 20.0% |
 
-![Distribuições das Variáveis Principais](../figures/01_distribuicoes.png)
-*Figura 1: Histogramas de Ticket Total, Prazo de Entrega e Atraso.*
+![Distribuições das Variáveis Principais](../figures/01_distribuicoes.png) *Figura 2: Histogramas de Ticket Total, Prazo de Entrega e Atraso.*
 
 ### 3.2. Análise de Correlações
 
 A matriz de correlação mostra, como esperado, uma correlação quase perfeita entre `Subtotal` e `Total` (0.97). Uma correlação negativa fraca entre `Discount` e `Total` (-0.11) sugere que descontos maiores não necessariamente levam a um aumento do ticket total, podendo estar associados a produtos de menor valor.
 
-![Matriz de Correlação](../figures/03_correlacao.png)
-*Figura 2: Heatmap de correlação entre as principais variáveis numéricas.*
+![Matriz de Correlação](../figures/03_correlacao.png) *Figura 3: Heatmap de correlação entre as principais variáveis numéricas.*
 
 ### 3.3. Análise Categórica
 
 **Receita por Categoria:** A categoria de **Eletrônicos** é a principal fonte de receita, seguida por **Casa e Decoração**. Livros, apesar de terem um alto volume de pedidos, contribuem com a menor parcela da receita devido ao baixo ticket médio.
 
-![Análise por Categoria](https://private-us-east-1.manuscdn.com/sessionFile/QZFEkxQOHKeamYWLo4fQ3z/sandbox/p0yPlsxTrKBdu92KPYGrTA-images_1764336380477_na1fn_L2hvbWUvdWJ1bnR1L2FuYWxpc2UtZGFkb3MtZWNvbW1lcmNlL2ZpZ3VyZXMvMDdfYW5hbGlzZV9jYXRlZ29yaWE.png?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvUVpGRWt4UU9IS2VhbVlXTG80ZlEzei9zYW5kYm94L3AweVBsc3hUcktCZHU5MktQWUdyVEEtaW1hZ2VzXzE3NjQzMzYzODA0NzdfbmExZm5fTDJodmJXVXZkV0oxYm5SMUwyRnVZV3hwYzJVdFpHRmtiM010WldOdmJXMWxjbU5sTDJacFozVnlaWE12TURkZllXNWhiR2x6WlY5allYUmxaMjl5YVdFLnBuZyIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5ODc2MTYwMH19fV19&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=Mnau70KnGzNXiTnCEKrly9tm7As5MyIKp9GyAflv9gr7QdmoLGOY9YStNIC-uAirUsOemVWUZjKTPQ3oKKAvNroLjui0rzgQN15O15Gnj9yqUE~v8z8pDk7dVGCZcyK7g6-y8hDYScN4HaamWOyVCelVW0LQNGxMOx4BimWtnzXvV4jF1hHs8Vm1rndQK8DDJwJXnd8-A8H0fKw~cz8zYraRp72ty6kwaerLqVXzFE46PSzCAGpTQJR7DAgxxZf06sK0Q5gjir00dj8XK2PngyInNxksUCL7WiGGVFXlPGwKn2eWwo7j34oi7tljK7NOzF~vdruLX2aixYaGNp1PZw__)
-*Figura 3: Análise de Receita, Ticket Médio e Desconto por Categoria.*
+![Análise por Categoria](https://private-us-east-1.manuscdn.com/sessionFile/QZFEkxQOHKeamYWLo4fQ3z/sandbox/p0yPlsxTrKBdu92KPYGrTA-images_1764336380477_na1fn_L2hvbWUvdWJ1bnR1L2FuYWxpc2UtZGFkb3MtZWNvbW1lcmNlL2ZpZ3VyZXMvMDdfYW5hbGlzZV9jYXRlZ29yaWE.png?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvUVpGRWt4UU9IS2VhbVlXTG80ZlEzei9zYW5kYm94L3AweVBsc3hUcktCZHU5MktQWUdyVEEtaW1hZ2VzXzE3NjQzMzYzODA0NzdfbmExZm5fTDJodmJXVXZkV0oxYm5SMUwyRnVZV3hwYzJVdFpHRmtiM010WldOdmJXMWxjbU5sTDJacFozVnlaWE12TURkZllXNWhiR2x6WlY5allYUmxaMjl5YVdFLnBuZyIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5ODc2MTYwMH19fV19&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=Mnau70KnGzNXiTnCEKrly9tm7As5MyIKp9GyAflv9gr7QdmoLGOY9YStNIC-uAirUsOemVWUZjKTPQ3oKKAvNroLjui0rzgQN15O15Gnj9yqUE~v8z8pDk7dVGCZcyK7g6-y8hDYScN4HaamWOyVCelVW0LQNGxMOx4BimWtnzXvV4jF1hHs8Vm1rndQK8DDJwJXnd8-A8H0fKw~cz8zYraRp72ty6kwaerLqVXzFE46PSzCAGpTQJR7DAgxxZf06sK0Q5gjir00dj8XK2PngyInNxksUCL7WiGGVFXlPGwKn2eWwo7j34oi7tljK7NOzF~vdruLX2aixYaGNp1PZw__) *Figura 4: Análise de Receita, Ticket Médio e Desconto por Categoria.*
 
 **Performance Logística:** O serviço **Standard** é o mais utilizado (70% dos pedidos confirmados), com o frete mais baixo, porém o maior prazo de entrega. O serviço **Same-Day**, embora mais caro, cumpre a promessa de entrega rápida. A taxa de atraso, no entanto, é similar entre os três serviços, pairando em torno de 47%.
 
-![Análise de Serviços de Entrega](https://private-us-east-1.manuscdn.com/sessionFile/QZFEkxQOHKeamYWLo4fQ3z/sandbox/p0yPlsxTrKBdu92KPYGrTA-images_1764336380477_na1fn_L2hvbWUvdWJ1bnR1L2FuYWxpc2UtZGFkb3MtZWNvbW1lcmNlL2ZpZ3VyZXMvMDlfYW5hbGlzZV9zZXJ2aWNv.png?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvUVpGRWt4UU9IS2VhbVlXTG80ZlEzei9zYW5kYm94L3AweVBsc3hUcktCZHU5MktQWUdyVEEtaW1hZ2VzXzE3NjQzMzYzODA0NzdfbmExZm5fTDJodmJXVXZkV0oxYm5SMUwyRnVZV3hwYzJVdFpHRmtiM010WldOdmJXMWxjbU5sTDJacFozVnlaWE12TURsZllXNWhiR2x6WlY5elpYSjJhV052LnBuZyIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5ODc2MTYwMH19fV19&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=mxcSCR7SncpTIzuP37KO1VzWznpY-yveSnfL7e3mK0MHhKWr4wHxRglxuUTDI9qf5-TCYwjJkHF2r04Bx-Mc9EemB0k7YXehKtTHWz3QxsmWUQNHRpD0jMM9Dq3ybbmaqBZ1fogMhkAy4eSIJgzkmLEbvrKz7gIzr-qjkJs0YjPJ0eh8P3vW5Vw3JtQB0RqRn3FgD1hfjKmKs1jkpTY92TOVyZVlKaNuwQR9kCQpXHJfHxP6H5m06cKcfYgIKQctDt-PLrIbykDYIE5Ch0Go9JlECVubHwu2ZfAPnuy4IToYJELwUCOSKUEWoZyeSMR1W7ATUCqS-6ectdpn74E3IQ__)
-*Figura 4: Comparativo de Frete, Prazo e Atraso por tipo de serviço.*
+![Análise de Serviços de Entrega](https://private-us-east-1.manuscdn.com/sessionFile/QZFEkxQOHKeamYWLo4fQ3z/sandbox/p0yPlsxTrKBdu92KPYGrTA-images_1764336380477_na1fn_L2hvbWUvdWJ1bnR1L2FuYWxpc2UtZGFkb3MtZWNvbW1lcmNlL2ZpZ3VyZXMvMDlfYW5hbGlzZV9zZXJ2aWNv.png?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvUVpGRWt4UU9IS2VhbVlXTG80ZlEzei9zYW5kYm94L3AweVBsc3hUcktCZHU5MktQWUdyVEEtaW1hZ2VzXzE3NjQzMzYzODA0NzdfbmExZm5fTDJodmJXVXZkV0oxYm5SMUwyRnVZV3hwYzJVdFpHRmtiM010WldOdmJXMWxjbU5sTDJacFozVnlaWE12TURsZllXNWhiR2x6WlY5elpYSjJhV052LnBuZyIsIkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc5ODc2MTYwMH19fV19&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=mxcSCR7SncpTIzuP37KO1VzWznpY-yveSnfL7e3mK0MHhKWr4wHxRglxuUTDI9qf5-TCYwjJkHF2r04Bx-Mc9EemB0k7YXehKtTHWz3QxsmWUQNHRpD0jMM9Dq3ybbmaqBZ1fogMhkAy4eSIJgzkmLEbvrKz7gIzr-qjkJs0YjPJ0eh8P3vW5Vw3JtQB0RqRn3FgD1hfjKmKs1jkpTY92TOVyZVlKaNuwQR9kCQpXHJfHxP6H5m06cKcfYgIKQctDt-PLrIbykDYIE5Ch0Go9JlECVubHwu2ZfAPnuy4IToYJELwUCOSKUEWoZyeSMR1W7ATUCqS-6ectdpn74E3IQ__) *Figura 5: Comparativo de Frete, Prazo e Atraso por tipo de serviço.*
 
 ---
 
@@ -123,8 +131,9 @@ Os testes de normalidade (Shapiro-Wilk, D'Agostino-Pearson) rejeitaram a hipóte
 
 Além da normalidade, a ANOVA exige a suposição de **homogeneidade das variâncias** (homocedasticidade) entre os grupos. O **Teste de Levene** foi aplicado para verificar se a variância do *Ticket Total* é similar entre as diferentes categorias de produtos.
 
-*   **Resultado do Teste de Levene:** [P-valor: 0.00000]
-*   **Conclusão:** Rejeita H0. Variâncias não são homogêneas (Heterocedasticidade).
+- **Resultado do Teste de Levene:** [P-valor: 0.00000]
+
+- **Conclusão:** Rejeita H0. Variâncias não são homogêneas (Heterocedasticidade).
 
 A documentação completa dos testes de suposição está disponível no notebook `05_statistical_inference.py`.
 
@@ -132,18 +141,19 @@ A documentação completa dos testes de suposição está disponível no noteboo
 
 Os ICs fornecem uma faixa de valores prováveis para as médias e proporções da população.
 
-*   **IC para Ticket Médio Total:** Com 95% de confiança, o ticket médio de todos os clientes do e-commerce está entre **R$ 915,64 e R$ 990,08**.
-*   **IC para Taxa de Atraso:** A verdadeira taxa de atraso da operação logística está entre **45.68% e 48.73%**.
-*   **IC para Taxa de Confirmação:** A proporção de pedidos que são efetivamente pagos e confirmados está entre **88.09% e 89.89%**.
+- **IC para Ticket Médio Total:** Com 95% de confiança, o ticket médio de todos os clientes do e-commerce está entre **R$ 915,64 e R$ 990,08**.
 
-![Intervalos de Confiança para Médias](https://private-us-east-1.manuscdn.com/sessionFile/QZFEkxQOHKeamYWLo4fQ3z/sandbox/p0yPlsxTrKBdu92KPYGrTA-images_1764336380478_na1fn_L2hvbWUvdWJ1bnR1L2FuYWxpc2UtZGFkb3MtZWNvbW1lcmNlL2ZpZ3VyZXMvMTFfaWNfbWVkaWFz.png?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvUVpGRWt4UU9IS2VhbVlXTG80ZlEzei9zYW5kYm94L3AweVBsc3hUcktCZHU5MktQWUdyVEEtaW1hZ2VzXzE3NjQzMzYzODA0NzhfbmExZm5fTDJodmJXVXZkV0oxYm5SMUwyRnVZV3hwYzJVdFpHRmtiM010WldOdmJXMWxjbU5sTDJacFozVnlaWE12TVRGZmFXTmZiV1ZrYVdGei5wbmciLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3OTg3NjE2MDB9fX1dfQ__&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=st5dI3XfBX9vZCzOkr~b1-G1fjM2mfFQsCM3gDlebv9Ap3cnLPzJYVI9PShgDxKQkcwg~YR6z~Mv6szArdWOFddcSsSspwsntw9A3DvJJK3UZhWeJZb-s4L39hkFAcx1rYMhI6K0EnGdGjGFR0ScKQadhdr29cTrMtRqHsQG9TKX3~FWS6tAc9rYxkj9Xf3gOAp2wM6-~fPqrq0EAs0b6Kkm~IvFCWycEGd8XS0CYCiJHdlNXBGrFUFFapcLWVLAH4aIr7bnTLPY6J2IYKVOfApubcaS2j4dvWkx1BeT1Ne6R0ee0sPcojiQpyYpfOW4tFLm3x-GLCCf1G88rGauFQ__)
-*Figura 5: Intervalos de confiança de 95% para as principais métricas de média.*
+- **IC para Taxa de Atraso:** A verdadeira taxa de atraso da operação logística está entre **45.68% e 48.73%**.
+
+- **IC para Taxa de Confirmação:** A proporção de pedidos que são efetivamente pagos e confirmados está entre **88.09% e 89.89%**.
+
+![Intervalos de Confiança para Médias](https://private-us-east-1.manuscdn.com/sessionFile/QZFEkxQOHKeamYWLo4fQ3z/sandbox/p0yPlsxTrKBdu92KPYGrTA-images_1764336380478_na1fn_L2hvbWUvdWJ1bnR1L2FuYWxpc2UtZGFkb3MtZWNvbW1lcmNlL2ZpZ3VyZXMvMTFfaWNfbWVkaWFz.png?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvUVpGRWt4UU9IS2VhbVlXTG80ZlEzei9zYW5kYm94L3AweVBsc3hUcktCZHU5MktQWUdyVEEtaW1hZ2VzXzE3NjQzMzYzODA0NzhfbmExZm5fTDJodmJXVXZkV0oxYm5SMUwyRnVZV3hwYzJVdFpHRmtiM010WldOdmJXMWxjbU5sTDJacFozVnlaWE12TVRGZmFXTmZiV1ZrYVdGei5wbmciLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3OTg3NjE2MDB9fX1dfQ__&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=st5dI3XfBX9vZCzOkr~b1-G1fjM2mfFQsCM3gDlebv9Ap3cnLPzJYVI9PShgDxKQkcwg~YR6z~Mv6szArdWOFddcSsSspwsntw9A3DvJJK3UZhWeJZb-s4L39hkFAcx1rYMhI6K0EnGdGjGFR0ScKQadhdr29cTrMtRqHsQG9TKX3~FWS6tAc9rYxkj9Xf3gOAp2wM6-~fPqrq0EAs0b6Kkm~IvFCWycEGd8XS0CYCiJHdlNXBGrFUFFapcLWVLAH4aIr7bnTLPY6J2IYKVOfApubcaS2j4dvWkx1BeT1Ne6R0ee0sPcojiQpyYpfOW4tFLm3x-GLCCf1G88rGauFQ__) *Figura 6: Intervalos de confiança de 95% para as principais métricas de média.*
 
 ### 4.3. Testes de Hipóteses
 
-*   **Taxa de Confirmação vs. Método de Pagamento:** O teste Qui-Quadrado mostrou uma **associação estatisticamente significativa** (p < 0.001) entre o método de pagamento e a confirmação do pedido. Isso confirma que a diferença nas taxas de confirmação entre Boleto/Débito e Crédito/PIX não ocorre ao acaso.
+- **Taxa de Confirmação vs. Método de Pagamento:** O teste Qui-Quadrado mostrou uma **associação estatisticamente significativa** (p < 0.001) entre o método de pagamento e a confirmação do pedido. Isso confirma que a diferença nas taxas de confirmação entre Boleto/Débito e Crédito/PIX não ocorre ao acaso.
 
-*   **Ticket Médio vs. Categoria:** O teste ANOVA revelou **diferenças estatisticamente significativas** (p < 0.001) no ticket médio entre as diferentes categorias de produtos, validando que `Eletrônicos` possuem um ticket médio estruturalmente maior que as demais.
+- **Ticket Médio vs. Categoria:** O teste ANOVA revelou **diferenças estatisticamente significativas** (p < 0.001) no ticket médio entre as diferentes categorias de produtos, validando que `Eletrônicos` possuem um ticket médio estruturalmente maior que as demais.
 
 ---
 
@@ -151,25 +161,25 @@ Os ICs fornecem uma faixa de valores prováveis para as médias e proporções d
 
 O dashboard abaixo consolida os principais KPIs (Key Performance Indicators) e direciona para os insights mais relevantes.
 
-![Dashboard de KPIs](https://private-us-east-1.manuscdn.com/sessionFile/QZFEkxQOHKeamYWLo4fQ3z/sandbox/p0yPlsxTrKBdu92KPYGrTA-images_1764336380548_na1fn_L2hvbWUvdWJ1bnR1L2FuYWxpc2UtZGFkb3MtZWNvbW1lcmNlL2ZpZ3VyZXMvMTNfZGFzaGJvYXJkX2twaXM.png?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvUVpGRWt4UU9IS2VhbVlXTG80ZlEzei9zYW5kYm94L3AweVBsc3hUcktCZHU5MktQWUdyVEEtaW1hZ2VzXzE3NjQzMzYzODA1NDhfbmExZm5fTDJodmJXVXZkV0oxYm5SMUwyRnVZV3hwYzJVdFpHRmtiM010WldOdmJXMWxjbU5sTDJacFozVnlaWE12TVROZlpHRnphR0p2WVhKa1gydHdhWE0ucG5nIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk4NzYxNjAwfX19XX0_&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=Qg5iyAsy6HISPBxH0qBRhqzNKae1jgfFiuP9a-NCHc1-S2XJOh4vfqplNV2zA~L9PNSApHhEp8yW~x2bZ7pQrP99yD4vf5VIkGrS~gfDoxt6Fb0EY~IWAUzQD4YrFQfklN~1y~JCWd5Y-PimJmh0GgRzEHw5OauhIshEQIrR~Tkkk1LO2yrwrnjFwRS3MrgRVlGoold18WiVECsxhr51eWdrCyE4tI6VwWNJCmeYWaGIudcVCI4si617ejJMa5dQwWfDnrLiT04pppDc5h7ir8861ZyPtvWBC8OI0KM3sumuYgyaXjNLkpKqOQRAjrQVuhUNX9yOdDqISoU9cw6Rcw__)
-*Figura 6: Dashboard consolidado com os principais KPIs do negócio.*
+![Dashboard de KPIs](https://private-us-east-1.manuscdn.com/sessionFile/QZFEkxQOHKeamYWLo4fQ3z/sandbox/p0yPlsxTrKBdu92KPYGrTA-images_1764336380548_na1fn_L2hvbWUvdWJ1bnR1L2FuYWxpc2UtZGFkb3MtZWNvbW1lcmNlL2ZpZ3VyZXMvMTNfZGFzaGJvYXJkX2twaXM.png?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvUVpGRWt4UU9IS2VhbVlXTG80ZlEzei9zYW5kYm94L3AweVBsc3hUcktCZHU5MktQWUdyVEEtaW1hZ2VzXzE3NjQzMzYzODA1NDhfbmExZm5fTDJodmJXVXZkV0oxYm5SMUwyRnVZV3hwYzJVdFpHRmtiM010WldOdmJXMWxjbU5sTDJacFozVnlaWE12TVROZlpHRnphR0p2WVhKa1gydHdhWE0ucG5nIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk4NzYxNjAwfX19XX0_&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=Qg5iyAsy6HISPBxH0qBRhqzNKae1jgfFiuP9a-NCHc1-S2XJOh4vfqplNV2zA~L9PNSApHhEp8yW~x2bZ7pQrP99yD4vf5VIkGrS~gfDoxt6Fb0EY~IWAUzQD4YrFQfklN~1y~JCWd5Y-PimJmh0GgRzEHw5OauhIshEQIrR~Tkkk1LO2yrwrnjFwRS3MrgRVlGoold18WiVECsxhr51eWdrCyE4tI6VwWNJCmeYWaGIudcVCI4si617ejJMa5dQwWfDnrLiT04pppDc5h7ir8861ZyPtvWBC8OI0KM3sumuYgyaXjNLkpKqOQRAjrQVuhUNX9yOdDqISoU9cw6Rcw__) *Figura 6: Dashboard consolidado com os principais KPIs do negócio.*
 
 ### Principais KPIs
 
-| Categoria         | KPI                     | Valor                  |
-| ----------------- | ----------------------- | ---------------------- |
-| **Financeiro**    | Receita Total (Confirmada) | R$ 3.915.541,69        |
-|                   | Ticket Médio            | R$ 952,86              |
-|                   | Take-rate de Frete      | 3.48%                  |
-| **Operacional**   | Taxa de Confirmação     | 88.95%                 |
-|                   | Taxa de Cancelamento    | 11.05%                 |
-| **Logístico**     | Prazo Médio de Entrega  | 10.1 dias              |
-|                   | Taxa de Atraso          | 47.20%                 |
+| Categoria | KPI | Valor |
+| --- | --- | --- |
+| **Financeiro** | Receita Total (Confirmada) | R$ 3.915.541,69 |
+|  | Ticket Médio | R$ 952,86 |
+|  | Take-rate de Frete | 3.48% |
+| **Operacional** | Taxa de Confirmação | 88.95% |
+|  | Taxa de Cancelamento | 11.05% |
+| **Logístico** | Prazo Médio de Entrega | 10.1 dias |
+|  | Taxa de Atraso | 47.20% |
 
 ### Insights Acionáveis
 
-1.  **Ação em Pagamentos:** A diferença de mais de 10 pontos percentuais na taxa de confirmação entre Boleto/Débito e PIX/Crédito é um ponto de atenção. **Recomendação:** Implementar um sistema de recuperação de boletos não pagos (ex: lembretes por e-mail/WhatsApp) e promover o PIX com pequenos incentivos (ex: cashback ou desconto no frete).
+1. **Ação em Pagamentos:** A diferença de mais de 10 pontos percentuais na taxa de confirmação entre Boleto/Débito e PIX/Crédito é um ponto de atenção. **Recomendação:** Implementar um sistema de recuperação de boletos não pagos (ex: lembretes por e-mail/WhatsApp) e promover o PIX com pequenos incentivos (ex: cashback ou desconto no frete).
 
-2.  **Estratégia de Mix de Produtos:** A alta concentração de receita em Eletrônicos (53%) cria uma dependência. **Recomendação:** Fomentar o crescimento de categorias com boa margem e ticket médio crescente, como **Casa e Decoração** (26% da receita), através de campanhas de marketing direcionadas e kits de produtos (bundles).
+1. **Estratégia de Mix de Produtos:** A alta concentração de receita em Eletrônicos (53%) cria uma dependência. **Recomendação:** Fomentar o crescimento de categorias com boa margem e ticket médio crescente, como **Casa e Decoração** (26% da receita), através de campanhas de marketing direcionadas e kits de produtos (bundles).
 
-3.  **Otimização Logística:** A taxa de atraso de 47% é um ponto crítico que afeta a experiência do cliente. A região Nordeste é a mais impactada. **Recomendação:** Renegociar SLAs (Service Level Agreements) com as transportadoras, diversificar parceiros logísticos na região Nordeste e avaliar a viabilidade de um mini centro de distribuição para reduzir o *lead time*.
+1. **Otimização Logística:** A taxa de atraso de 47% é um ponto crítico que afeta a experiência do cliente. A região Nordeste é a mais impactada. **Recomendação:** Renegociar SLAs (Service Level Agreements) com as transportadoras, diversificar parceiros logísticos na região Nordeste e avaliar a viabilidade de um mini centro de distribuição para reduzir o *lead time*.
+
