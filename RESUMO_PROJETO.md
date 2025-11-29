@@ -102,5 +102,4 @@ source venv/bin/activate
 ---
 
 **Desenvolvido por**: Gabriel Sozua, Leandro Moraes
-**Data**: 08 de Novembro de 2025  
-**Versão**: 1.0
+**Data**: 28 de Novembro de 2025
